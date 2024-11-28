@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/global.css'; // Ensure this file is included for global styles
+import api from '../services/api'; // Use the Axios instance created for API calls
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -7,32 +9,32 @@ const Signup = () => {
       email: '',
       password: '',
     });
-  
+
     const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
     };
-  
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch('http://localhost:3000/api/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...formData, role: 'USER_ROLE' }), // Force role to USER_ROLE
+        // Using Axios for the POST request
+        const response = await api.post('/users', {
+          ...formData,
+          role: 'USER_ROLE', // Force role to USER_ROLE
         });
-        if (response.ok) {
+
+        if (response.status === 201) { // 201 indicates successful resource creation
           alert('User account created successfully!');
         } else {
-          const error = await response.json();
-          alert(`Error: ${error.message || 'Failed to create account'}`);
+          alert(`Error: ${response.data.msg || 'Failed to create account'}`);
         }
       } catch (error) {
         console.error('Error:', error);
         alert('Server error. Please try again later.');
       }
     };
-  
+
     return (
       <div className="form-container">
         <h1>Sign Up</h1>
@@ -66,5 +68,5 @@ const Signup = () => {
       </div>
     );
   };
-  
-  export default Signup;
+
+export default Signup;

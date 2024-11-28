@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/global.css';
-import api from '../services/api'; // Import the api instance
+import api from '../services/api';
 
 export const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -22,9 +22,9 @@ export const Login = () => {
         localStorage.setItem('token', token);
 
         if (user.role === 2) {
-          navigate('/admin'); // Redirect to Admin page
+          navigate('/admin');
         } else if (user.role === 1) {
-          navigate('/user'); // Redirect to User page
+          navigate('/user');
         } else {
           alert('Unknown role!');
         }

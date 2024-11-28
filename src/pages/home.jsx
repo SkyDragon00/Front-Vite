@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-import '../assets/css/global.css'; // Ensure this file is included for global styles
+import '../assets/css/global.css';
 import LogoDragon from '../assets/LogoDragon.png';
 
 export const Home = () => {
