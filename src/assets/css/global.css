@@ -1,0 +1,53 @@
+/* Center content */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f8f9fa; /* Adjust background color */
+  }
+  
+  .logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50; /* Darker text */
+    margin-bottom: 30px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button {
+    background-color: #3498db; /* Blue color */
+    color: white;
+  }
+  
+  .signup-button {
+    background-color: #2ecc71; /* Green color */
+    color: white;
+  }
+  
+  .button:hover {
+    filter: brightness(0.9);
+  }
+  
