@@ -1,4 +1,6 @@
-export { Login } from "./login";
-export { User } from './user';
+export { Login } from './Login';
+export { Home } from './Home';
+export { User } from './User';
 export { Admin } from './admin';
-export { Home } from './home';
+
+export { AddGame } from './adminPage';

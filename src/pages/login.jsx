@@ -1,5 +1,7 @@
 export const Login = () => {
     return (
-        <div>login</div>
+        <>
+            <h1>Login</h1>
+        </>
     )
 }
