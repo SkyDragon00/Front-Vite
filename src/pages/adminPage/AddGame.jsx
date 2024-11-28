@@ -1,25 +1,26 @@
 import { useState } from "react";
+import api from '../../services/api';  // Adjusted import path
 
 const validTags = [
-  'Action',
-  'Platform',
-  'Sandbox',
-  'Horror',
-  'Shooter',
-  'RPG',
-  'Adventure',
-  'Sports',
-  'Fighting',
-  'Rhythm',
+  "Action",
+  "Platform",
+  "Sandbox",
+  "Horror",
+  "Shooter",
+  "RPG",
+  "Adventure",
+  "Sports",
+  "Fighting",
+  "Rhythm",
 ];
 
-const validSeasons = ['Halloween', 'Christmass', 'Valentine', 'Easter'];
+const validSeasons = ["Halloween", "Christmass", "Valentine", "Easter"];
 
 export const AddGame = () => {
   const [gameData, setGameData] = useState({
-    name: '',
-    description: '',
-    price: '',
+    name: "",
+    description: "",
+    price: "",
     tags: [],
     season: [],
   });
@@ -41,28 +42,24 @@ export const AddGame = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/api/game/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(gameData),
-      });
+      // Use Axios to send POST request
+      const response = await api.post("/game/add", gameData);
 
-      if (response.ok) {
-        alert('Game added successfully!');
+      if (response.status === 200) {
+        alert("Game added successfully!");
         setGameData({
-          name: '',
-          description: '',
-          price: '',
+          name: "",
+          description: "",
+          price: "",
           tags: [],
           season: [],
         });
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message || 'Failed to add game'}`);
+        alert(`Error: ${response.data.message || "Failed to add game"}`);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Server error. Please try again later.');
+      console.error("Error:", error);
+      alert("Server error. Please try again later.");
     }
   };
 
