@@ -7,4 +7,16 @@ const api = axios.create({
   },
 });
 
+const getAllGames = async () => {
+  try {
+      const response = await api.get('/game/all');
+      return response.data;
+  } catch (error) {
+      console.error('Error fetching games:', error);
+      throw error;
+  }
+};
+
+export { getAllGames };
+
 export default api;

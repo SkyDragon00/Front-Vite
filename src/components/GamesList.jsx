@@ -1,39 +1,64 @@
 import { useEffect, useState } from "react";
-import axios from "../services/api";
+import { getAllGames } from "../services/api";
+import "../assets/css/global.css";
 
-export default function GamesList() {
-  const [games, setGames] = useState([]);
+const Games = () => {
+    const [games, setGames] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const { data } = await axios.get("/game/all");
-        setGames(data);
-      } catch (error) {
-        console.error("Error fetching games:", error);
-      }
-    };
+    useEffect(() => {
+        const fetchGames = async () => {
+            try {
+                const data = await getAllGames();
+                setGames(data);
+            } catch (err) {
+                setError('Failed to load games. Please try again later.');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchGames();
-  }, []);
+        fetchGames();
+    }, []);
 
-  return (
-    <div>
-      <h2>Available Games</h2>
-      {games.length > 0 ? (
-        <ul>
-          {games.map((game) => (
-            <li key={game.id}>
-              <h3>{game.name}</h3>
-              <p>{game.description}</p>
-              <p>Price: ${game.price}</p>
-              {game.tags && <p>Tags: {game.tags.join(", ")}</p>}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No games available.</p>
-      )}
-    </div>
-  );
-}
+    if (loading) return <div>Loading games...</div>;
+    if (error) return <div>{error}</div>;
+
+    return (
+        <div className="games-container">
+            <h1>Available Games</h1>
+            <div className="games-list">
+                {games.map((game) => (
+                    <div key={game.id} className="game-card">
+                        <h2>{game.name}</h2>
+                        <p>{game.description}</p>
+                        <p>Price: ${game.price}</p>
+                        {game.tags?.length > 0 && (
+                            <div>
+                                <strong>Tags:</strong>
+                                <ul>
+                                    {game.tags.map((tag, index) => (
+                                        <li key={index}>{tag}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {game.season?.length > 0 && (
+                            <div>
+                                <strong>Seasonal:</strong>
+                                <ul>
+                                    {game.season.map((season, index) => (
+                                        <li key={index}>{season}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default Games;
